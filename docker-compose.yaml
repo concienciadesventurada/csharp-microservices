@@ -1,0 +1,12 @@
+version: '3'
+services:
+  mssql-coupon:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql-coupon
+    hostname: mssql-coupon
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=aA4rPLenPGvqvsvu5UpDtMgufNtVUg5AkhTTsM2XXjWVIXZOPPMRN3FHsRKTQdKb
+    ports:
+      - "1433:1433"
+    restart: unless-stopped
