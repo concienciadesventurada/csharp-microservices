@@ -4,14 +4,11 @@
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace CouponAPI.Migrations
-{
+namespace CouponAPI.Migrations {
     /// <inheritdoc />
-    public partial class AddedExampleCoupons : Migration
-    {
+    public partial class AddedExampleCoupons : Migration {
         /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.InsertData(
                 table: "Coupons",
                 columns: new[] { "CouponId", "CouponCode", "DiscountAmount", "MinAmount" },
@@ -23,8 +20,7 @@ namespace CouponAPI.Migrations
         }
 
         /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DeleteData(
                 table: "Coupons",
                 keyColumn: "CouponId",

@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{23
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CouponAPI", "Services\CouponAPI\CouponAPI.csproj", "{CE4393C4-C416-4AE6-ADF8-DCD8951363E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{FC7FD20E-7D79-4385-9191-6A9D553C8FF2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{CE4393C4-C416-4AE6-ADF8-DCD8951363E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE4393C4-C416-4AE6-ADF8-DCD8951363E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE4393C4-C416-4AE6-ADF8-DCD8951363E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC7FD20E-7D79-4385-9191-6A9D553C8FF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC7FD20E-7D79-4385-9191-6A9D553C8FF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC7FD20E-7D79-4385-9191-6A9D553C8FF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC7FD20E-7D79-4385-9191-6A9D553C8FF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{CE4393C4-C416-4AE6-ADF8-DCD8951363E6} = {238D6C9A-4139-4E52-8415-99C98BB8BAC4}
