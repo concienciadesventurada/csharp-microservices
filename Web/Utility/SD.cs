@@ -6,5 +6,6 @@ namespace Web.Utility {
             PUT,
             DELETE
         }
+        public static string CouponAPIBase { get; set; }
     }
 }
