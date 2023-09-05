@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Services.CouponAPI.Data;
 using Services.CouponAPI.Models;
 using Services.CouponAPI.Models.DTO;
+using AutoMapper;
 
 namespace Services.CouponAPI.Controllers
 {
@@ -11,10 +12,12 @@ namespace Services.CouponAPI.Controllers
   {
     private readonly AppDbContext _db;
     private ResponseDTO _res;
+    private IMapper _mapper;
 
-    public CouponAPIController(AppDbContext db)
+    public CouponAPIController(AppDbContext db, IMapper mapper)
     {
       _db = db;
+      _mapper = mapper;
       _res = new ResponseDTO();
     }
 
@@ -27,7 +30,12 @@ namespace Services.CouponAPI.Controllers
       try
       {
         Coupon coupon = _db.Coupons.First(u => u.CouponId == id);
-        _res.Result = coupon;
+
+        // NOTE: We previously returned the object itself, but that's not good.
+        // Instead, we now use AutoMapper to pass it. It'll work as long as the
+        // attributes of the class and DTO coincide.
+        _res.Result = _mapper.Map<CouponDTO>(coupon);
+
         _res.IsSuccess = true;
       }
       catch (Exception ex)
@@ -47,8 +55,90 @@ namespace Services.CouponAPI.Controllers
       try
       {
         IEnumerable<Coupon> obj = _db.Coupons.ToList();
-        _res.Result = obj;
+
+        _res.Result = _mapper.Map<IEnumerable<CouponDTO>>(obj);
         _res.IsSuccess = true;
+      }
+      catch (Exception ex)
+      {
+        _res.IsSuccess = false;
+        _res.Message = ex.Message;
+      }
+
+      return _res;
+    }
+
+    [HttpGet]
+    // NOTE: Funny how it crashes if I declare it as string...
+    [Route("GetByCode/{code}")]
+    public ResponseDTO GetByCode(string code)
+    {
+      try
+      {
+        Coupon coupon = _db.Coupons.First(u => u.CouponCode.ToLower() == code.ToLower());
+
+        // TODO: It'll crash the server if I add the CouponId myself, learn why...
+        _res.Result = _mapper.Map<CouponDTO>(coupon);
+        _res.IsSuccess = true;
+      }
+      catch (Exception ex)
+      {
+        _res.IsSuccess = false;
+        _res.Message = ex.Message;
+      }
+
+      return _res;
+    }
+
+    [HttpPost]
+    public ResponseDTO Post([FromBody] CouponDTO couponDto)
+    {
+      try
+      {
+        Coupon coupon = _mapper.Map<Coupon>(couponDto);
+        _db.Coupons.Add(coupon); // Enqueues for insertion in db
+        _db.SaveChanges(); // Write the changes to the db
+
+        _res.Result = _mapper.Map<CouponDTO>(coupon);
+      }
+      catch (Exception ex)
+      {
+        _res.IsSuccess = false;
+        _res.Message = ex.Message;
+      }
+
+      return _res;
+    }
+
+    [HttpPut]
+    public ResponseDTO Put([FromBody] CouponDTO couponDto)
+    {
+      try
+      {
+        Coupon coupon = _mapper.Map<Coupon>(couponDto);
+        _db.Coupons.Update(coupon);
+        _db.SaveChanges();
+
+        _res.Result = _mapper.Map<CouponDTO>(coupon);
+      }
+      catch (Exception ex)
+      {
+        _res.IsSuccess = false;
+        _res.Message = ex.Message;
+      }
+
+      return _res;
+    }
+
+    [HttpDelete]
+    [Route("{id:int}")]
+    public ResponseDTO Delete(int id)
+    {
+      try
+      {
+        Coupon coupon = _db.Coupons.First(u => u.CouponId == id);
+        _db.Coupons.Remove(coupon);
+        _db.SaveChanges();
       }
       catch (Exception ex)
       {
