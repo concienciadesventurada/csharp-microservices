@@ -17,8 +17,7 @@ if you already have installed previous versions. At time of writing this, the
 LTS and Standard versions are 6.0 and 7.0 respectively.
 
 For those of you running Fedora Workstation, you'll be glad to know you can
-`cd` to the directory where all the `.rmp`s are and run `sudo yum localinstall 
-* --allowerase`. Which will remove the dependencies that you have in place for
+`cd` to the directory where all the `.rmp`s are and run `sudo yum localinstall * --allowerase`. Which will remove the dependencies that you have in place for
 the 8.0 preview.
 
 ## NuGet Packet Manager "workarounds"
