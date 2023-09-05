@@ -30,5 +30,19 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
+ApplyMigration();
 app.Run();
+
+// NOTE: To avoid calling `dotnet ef migrations add <Migration>` we use this fn
+void ApplyMigration()
+{
+  using (var scope = app.Services.CreateScope())
+  {
+    var _db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    if (_db.Database.GetPendingMigrations().Count() > 0)
+    {
+      _db.Database.Migrate();
+    }
+  }
+}
