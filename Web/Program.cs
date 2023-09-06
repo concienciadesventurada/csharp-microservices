@@ -1,6 +1,6 @@
-using Web.Utility;
-using Web.Service.IService;
 using Web.Service;
+using Web.Service.IService;
+using Web.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 

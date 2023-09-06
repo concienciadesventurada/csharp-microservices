@@ -18,7 +18,6 @@ namespace Web.Service {
         public async Task<ResponseDTO?> SendAsync(RequestDTO reqDTO) {
 
             try {
-
                 HttpClient client = _httpClientFactory.CreateClient("MangoAPI");
                 HttpRequestMessage msg = new();
                 msg.Headers.Add("Accept", "application/json");
