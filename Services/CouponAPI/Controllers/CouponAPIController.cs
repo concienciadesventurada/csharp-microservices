@@ -7,7 +7,7 @@ using Services.CouponAPI.Models;
 using Services.CouponAPI.Models.DTO;
 
 namespace Services.CouponAPI.Controllers {
-    [Route("api/[controller]")]
+    [Route("api/coupon")]
     [ApiController]
     public class CouponAPIController : ControllerBase {
         private readonly AppDbContext _db;
