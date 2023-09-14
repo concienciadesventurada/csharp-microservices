@@ -58,12 +58,12 @@ namespace Web.Service {
         }
 
         public async Task<ResponseDTO?> DeleteCouponAsync(int id) {
-           return await _baseService.SendAsync(
-                    new RequestDTO() {
-                        ApiType = SD.ApiType.DELETE,
-                        Url = SD.CouponAPIBase + "/api/coupon/" + id
-                    }
-                );
+            return await _baseService.SendAsync(
+                     new RequestDTO() {
+                         ApiType = SD.ApiType.DELETE,
+                         Url = SD.CouponAPIBase + "/api/coupon/" + id
+                     }
+                 );
         }
     }
 }

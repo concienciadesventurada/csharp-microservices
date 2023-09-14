@@ -1,15 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 
-using Web.Service.IService;
-
-using Web.Models.DTO;
-
 using Newtonsoft.Json;
 
-namespace Web.Controllers
-{
-    public class CouponController : Controller
-    {
+using Web.Models.DTO;
+using Web.Service.IService;
+
+namespace Web.Controllers {
+    public class CouponController : Controller {
         private readonly ICouponService _couponService;
 
         public CouponController(ICouponService couponService) {
@@ -25,6 +22,10 @@ namespace Web.Controllers
                 coupons = JsonConvert.DeserializeObject<List<CouponDTO>>(Convert.ToString(res.Result)!);
 
             return View(coupons);
+        }
+
+        public async Task<IActionResult> CouponCreate() {
+            return View();
         }
     }
 }
