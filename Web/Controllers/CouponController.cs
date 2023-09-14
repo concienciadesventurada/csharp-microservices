@@ -18,8 +18,12 @@ namespace Web.Controllers {
 
             ResponseDTO? res = await _couponService.GetAllCouponsAsync();
 
-            if (res != null && res.IsSuccess)
+            if (res != null && res.IsSuccess) {
                 coupons = JsonConvert.DeserializeObject<List<CouponDTO>>(Convert.ToString(res.Result)!);
+            }
+            else {
+                TempData["error"] = res?.Message;
+            }
 
             return View(coupons);
         }
@@ -34,7 +38,11 @@ namespace Web.Controllers {
                 ResponseDTO? res = await _couponService.CreateCouponAsync(model);
 
                 if (res != null && res.IsSuccess) {
+                    TempData["success"] = "Coupon created successfully";
                     return RedirectToAction(nameof(CouponIndex));
+                }
+                else {
+                    TempData["error"] = res?.Message;
                 }
             }
 
@@ -46,8 +54,10 @@ namespace Web.Controllers {
 
             if (res != null && res.IsSuccess) {
                 CouponDTO? model = JsonConvert.DeserializeObject<CouponDTO>(Convert.ToString(res.Result)!);
+                TempData["success"] = "Coupon deleted successfully";
                 return View(model);
             }
+            else TempData["error"] = res?.Message;
 
             return NotFound();
         }
@@ -57,8 +67,22 @@ namespace Web.Controllers {
             ResponseDTO? res = await _couponService.DeleteCouponAsync(couponDto.CouponId);
 
             if (res != null && res.IsSuccess) return RedirectToAction(nameof(CouponIndex));
+            else TempData["error"] = res?.Message;
 
             return View(couponDto);
         }
+
+        /* TODO:
+        public async Task<IActionResult> CouponUpdate(CouponDTO couponDto) {
+            ResponseDTO? res = await _couponService.UpdateCouponAsync(couponDto);
+
+            if (res != null && res.IsSuccess) {
+                CouponDTO? coupon = JsonConvert.DeserializeObject<CouponDTO>(Convert.ToString(res.Result)!);
+                return View(coupon);
+            }
+
+            return NotFound();
+        }
+        */
     }
 }
