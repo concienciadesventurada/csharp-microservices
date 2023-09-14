@@ -11,8 +11,8 @@ using Services.CouponAPI.Data;
 namespace CouponAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230905015804_AddedExampleCoupons")]
-    partial class AddedExampleCoupons
+    [Migration("20230914191819_AddDbContext")]
+    partial class AddDbContext
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
