@@ -22,9 +22,38 @@ namespace Services.AuthAPI.Service {
             _roleManager = roleManager;
         }
 
-        public Task<UserDTO> Register(RegistrationRequestDTO registerReqDto) {
-            throw new NotImplementedException();
+        public async Task<UserDTO> Register(RegistrationRequestDTO registerReqDto) {
+            ApplicationUser user = new() {
+                UserName = registerReqDto.Email,
+                Email = registerReqDto.Email,
+                NormalizedEmail = registerReqDto.Email.ToUpper(),
+                Name = registerReqDto.Name,
+                PhoneNumber = registerReqDto.PhoneNumber
+            };
+
+            try {
+                var res = await _userManager.CreateAsync(user, registerReqDto.Password);
+
+                if (res.Succeeded) {
+                    var userRes = _db.ApplicationUsers.First(u => u.UserName == registerReqDto.Email);
+
+                    UserDTO userDto = new() {
+                        Email = userRes.Email,
+                        ID = userRes.Id,
+                        Name = userRes.Name,
+                        PhoneNumber = userRes.PhoneNumber
+                    };
+
+                    return userDto;
+                }
+            }
+            catch (Exception ex) {
+                return new UserDTO();
+            }
+
+            return new UserDTO();
         }
+
         public Task<LoginResponseDTO> Login(LoginRequestDTO loginReqDto) {
             throw new NotImplementedException();
         }
