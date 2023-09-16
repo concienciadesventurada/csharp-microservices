@@ -2,14 +2,11 @@
 
 #nullable disable
 
-namespace AuthAPI.Migrations
-{
+namespace AuthAPI.Migrations {
     /// <inheritdoc />
-    public partial class addedName : Migration
-    {
+    public partial class addedName : Migration {
         /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.AddColumn<string>(
                 name: "Name",
                 table: "AspNetUsers",
@@ -19,8 +16,7 @@ namespace AuthAPI.Migrations
         }
 
         /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropColumn(
                 name: "Name",
                 table: "AspNetUsers");

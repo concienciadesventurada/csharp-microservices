@@ -1,8 +1,8 @@
-using Services.AuthAPI.Data;
-using Services.AuthAPI.Models;
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
+using Services.AuthAPI.Data;
+using Services.AuthAPI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +13,10 @@ builder.Services.AddDbContext<AppDbContext>(option => {
     option.UseSqlServer(builder.Configuration["User:DockerConnection"]);
 });
 
+// NOTE: This now makes dependency injection possible and passes the variables
+// to initialize them with its environment variables
+builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("ApiSettings:JwtOptions"));
+
 // TODO: Investigate this line in depth
 // IdentityRole can vary as far as I can see?
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
@@ -22,8 +26,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
+if (app.Environment.IsDevelopment()) {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
