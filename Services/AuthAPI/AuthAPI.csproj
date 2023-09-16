@@ -4,12 +4,14 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>1d14012d-afc8-4f0a-a383-db08bcc77010</UserSecretsId>
+    <InvariantGlobalization>false</InvariantGlobalization>
+    <UserSecretsId>7d5e81b6-4138-4581-8971-7691b6642284</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0-rc.1.23421.29" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0-rc.1.23421.29" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0-rc.1.23419.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0-rc.1.23419.6" />
