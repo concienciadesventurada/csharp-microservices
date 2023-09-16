@@ -1,4 +1,6 @@
 using Services.AuthAPI.Data;
+using Services.AuthAPI.Models;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +15,7 @@ builder.Services.AddDbContext<AppDbContext>(option => {
 
 // TODO: Investigate this line in depth
 // IdentityRole can vary as far as I can see?
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
