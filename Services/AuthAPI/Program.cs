@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 using Services.AuthAPI.Data;
 using Services.AuthAPI.Models;
+using Services.AuthAPI.Service.IService;
+using Services.AuthAPI.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,8 @@ builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("ApiSett
 // IdentityRole can vary as far as I can see?
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
+builder.Services.AddScoped<IAuthService, AuthService>();
+
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 
@@ -32,7 +36,7 @@ if (app.Environment.IsDevelopment()) {
 }
 
 app.UseHttpsRedirection();
-// NOTE: Auth ALWAYS must be befor authorization
+// NOTE: Auth ALWAYS must be before authorization
 app.UseAuthentication();
 app.UseAuthorization();
 

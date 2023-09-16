@@ -6,7 +6,7 @@ using Services.AuthAPI.Models.DTO;
 using Services.AuthAPI.Service.IService;
 
 namespace Services.AuthAPI.Service {
-    public class AuthService : IAuthUser {
+    public class AuthService : IAuthService {
         private readonly AppDbContext _db;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -22,7 +22,10 @@ namespace Services.AuthAPI.Service {
             _roleManager = roleManager;
         }
 
-        public async Task<UserDTO> Register(RegistrationRequestDTO registerReqDto) {
+        // NOTE: Instructor changes it for a string, I imagine for
+        // (de)serialization bc I know we have a (de)ser client-side. However, I
+        // don't think I'd be implementing it this way using other frontend
+        public async Task<string> Register(RegistrationRequestDTO registerReqDto) {
             ApplicationUser user = new() {
                 UserName = registerReqDto.Email,
                 Email = registerReqDto.Email,
@@ -44,14 +47,15 @@ namespace Services.AuthAPI.Service {
                         PhoneNumber = userRes.PhoneNumber
                     };
 
-                    return userDto;
+                    return "";
+                } else {
+                    return res.Errors.FirstOrDefault().Description;
                 }
             }
             catch (Exception ex) {
-                return new UserDTO();
             }
-
-            return new UserDTO();
+            // DOUBT: Guy makes it the other way around, why?
+            return "Error encuentered";
         }
 
         public Task<LoginResponseDTO> Login(LoginRequestDTO loginReqDto) {
