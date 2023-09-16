@@ -48,7 +48,8 @@ namespace Services.AuthAPI.Service {
                     };
 
                     return "";
-                } else {
+                }
+                else {
                     return res.Errors.FirstOrDefault().Description;
                 }
             }

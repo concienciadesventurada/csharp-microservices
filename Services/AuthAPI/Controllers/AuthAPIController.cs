@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-using Services.AuthAPI.Service.IService;
 using Services.AuthAPI.Models.DTO;
+using Services.AuthAPI.Service.IService;
 
 namespace Services.AuthAPI.Controllers {
     [Route("api/auth")]
