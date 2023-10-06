@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddRouting();
 
 builder.Services.AddDbContext<AppDbContext>(option => {
     option.UseSqlServer(builder.Configuration["User:DockerConnection"]);
@@ -17,6 +18,7 @@ builder.Services.AddDbContext<AppDbContext>(option => {
 
 // NOTE: This now makes dependency injection possible and passes the variables
 // to initialize them with its environment variables
+// TODO: Apply as secret
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("ApiSettings:JwtOptions"));
 
 // TODO: Investigate this line in depth
@@ -39,6 +41,10 @@ app.UseHttpsRedirection();
 // NOTE: Auth ALWAYS must be before authorization
 app.UseAuthentication();
 app.UseAuthorization();
+
+// NOTE: Make Controller endpoints accesible, same with builder.AddRouting()
+app.UseRouting();
+app.MapControllers();
 
 ApplyMigration();
 app.Run();

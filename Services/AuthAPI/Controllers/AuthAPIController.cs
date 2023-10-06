@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using Services.AuthAPI.Models.DTO;
@@ -31,8 +30,17 @@ namespace Services.AuthAPI.Controllers {
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login() {
-            return Ok();
+        public async Task<IActionResult> Login([FromBody] LoginRequestDTO model) {
+            var loginRes = await _authService.Login(model);
+
+            if (loginRes.User == null) {
+                _res.IsSuccess = false;
+                _res.Message = "Username or password is incorrect";
+                return BadRequest(_res);
+            }
+
+            _res.Result = loginRes;
+            return Ok(_res);
         }
     }
 }

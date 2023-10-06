@@ -13,7 +13,8 @@ namespace Services.AuthAPI.Service {
 
         // NOTE: All these are dependency injection that Identity already
         // provides for managing users
-        public AuthService(AppDbContext db,
+        public AuthService(
+                AppDbContext db,
                 UserManager<ApplicationUser> userManager,
                 RoleManager<IdentityRole> roleManager
             ) {
@@ -56,11 +57,34 @@ namespace Services.AuthAPI.Service {
             catch (Exception ex) {
             }
             // DOUBT: Guy makes it the other way around, why?
-            return "Error encuentered";
+            return "Error encountered";
         }
 
-        public Task<LoginResponseDTO> Login(LoginRequestDTO loginReqDto) {
-            throw new NotImplementedException();
+        public async Task<LoginResponseDTO> Login(LoginRequestDTO loginReqDto) {
+            var user = _db.ApplicationUsers.FirstOrDefault(u => u.UserName == loginReqDto.Email);
+
+            if (user != null) {
+                bool isValid = await _userManager.CheckPasswordAsync(user, loginReqDto.Password);
+
+                if (!isValid) return new LoginResponseDTO() { User = null };
+
+                UserDTO userDTO = new() {
+                    Email = user.Email,
+                    ID = user.Id,
+                    Name = user.Name,
+                    PhoneNumber = user.PhoneNumber
+                };
+
+                LoginResponseDTO loginResDto = new LoginResponseDTO() {
+                    User = userDTO,
+                    Token = ""
+                };
+
+                return loginResDto;
+            }
+            else {
+                return new LoginResponseDTO() { User = null };
+            }
         }
     }
 }
