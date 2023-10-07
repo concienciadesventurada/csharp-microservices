@@ -10,17 +10,20 @@ namespace Services.AuthAPI.Service {
         private readonly AppDbContext _db;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IJWTGenerator _JwtGenerator;
 
         // NOTE: All these are dependency injection that Identity already
         // provides for managing users
         public AuthService(
                 AppDbContext db,
                 UserManager<ApplicationUser> userManager,
-                RoleManager<IdentityRole> roleManager
+                RoleManager<IdentityRole> roleManager,
+                IJWTGenerator jwtGenerator
             ) {
             _db = db;
             _userManager = userManager;
             _roleManager = roleManager;
+            _JwtGenerator = jwtGenerator;
         }
 
         // NOTE: Instructor changes it for a string, I imagine for
@@ -75,9 +78,11 @@ namespace Services.AuthAPI.Service {
                     PhoneNumber = user.PhoneNumber
                 };
 
+                var token = _JwtGenerator.GenerateToken(user);
+
                 LoginResponseDTO loginResDto = new LoginResponseDTO() {
                     User = userDTO,
-                    Token = ""
+                    Token = token
                 };
 
                 return loginResDto;
