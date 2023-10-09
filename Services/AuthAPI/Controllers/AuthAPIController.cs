@@ -42,5 +42,19 @@ namespace Services.AuthAPI.Controllers {
             _res.Result = loginRes;
             return Ok(_res);
         }
+
+        [HttpPost("assign-role")]
+        public async Task<IActionResult> AssignRole([FromBody] RegistrationRequestDTO model) {
+            var assigned = await _authService.AssignRole(model.Email, model.Role.ToUpper());
+
+            if (!assigned) {
+                _res.IsSuccess = false;
+                _res.Message = "Couldn't assign role";
+                return BadRequest(_res);
+            }
+
+            _res.Result = assigned;
+            return Ok(assigned);
+        }
     }
 }
