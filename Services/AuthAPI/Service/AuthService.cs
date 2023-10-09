@@ -78,7 +78,9 @@ namespace Services.AuthAPI.Service {
                     PhoneNumber = user.PhoneNumber
                 };
 
-                var token = _JwtGenerator.GenerateToken(user);
+                var roles = await _userManager.GetRolesAsync(user);
+
+                var token = _JwtGenerator.GenerateToken(user, roles);
 
                 LoginResponseDTO loginResDto = new LoginResponseDTO() {
                     User = userDTO,

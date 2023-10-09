@@ -19,7 +19,7 @@ namespace Services.AuthAPI.Service {
             _jwtOptions = jwtOptions.Value;
         }
 
-        public string GenerateToken(ApplicationUser appUser) {
+        public string GenerateToken(ApplicationUser appUser, IEnumerable<string> roles) {
             var tokenHandler = new JwtSecurityTokenHandler();
 
             var key = Encoding.ASCII.GetBytes(_jwtOptions.Secret);
@@ -29,6 +29,10 @@ namespace Services.AuthAPI.Service {
                 new Claim(JwtRegisteredClaimNames.Sub, appUser.Id),
                 new Claim(JwtRegisteredClaimNames.Name, appUser.UserName),
             };
+
+            // INFO: Since roles its an enumerable, we add it as a Role type for
+            // it to be checked with native attributes
+            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
             var tokenDescriptor = new SecurityTokenDescriptor {
                 Audience = _jwtOptions.Audience,
