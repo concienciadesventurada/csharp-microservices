@@ -16,6 +16,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<ICouponService, CouponService>();
 
 SD.CouponAPIBase = builder.Configuration["ServiceUrls:CouponAPI"]!;
+SD.AuthAPIBase = builder.Configuration["ServiceUrls:AuthAPI"]!;
 
 // NOTE: Scoped would be the lifetime of the client created. This also states
 // that the HttpClient will come from one of these instances
