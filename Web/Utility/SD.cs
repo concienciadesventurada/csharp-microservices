@@ -6,7 +6,12 @@ namespace Web.Utility {
             PUT,
             DELETE
         }
+
         public static string CouponAPIBase { get; set; }
         public static string AuthAPIBase { get; set; }
+
+        // HACK: Temporary fix becasue we are not setting the role anywhere else
+        public const string RoleAdmin = "ADMIN";
+        public const string RoleCustomer = "CUSTOMER";
     }
 }
