@@ -13,5 +13,7 @@ namespace Web.Utility {
         // HACK: Temporary fix becasue we are not setting the role anywhere else
         public const string RoleAdmin = "ADMIN";
         public const string RoleCustomer = "CUSTOMER";
+
+        public const string TokenCookie = "Authorization";
     }
 }
